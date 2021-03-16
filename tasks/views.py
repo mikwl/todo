@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-
+from rest_framework.generics import (CreateAPIView, RetrieveAPIView, ListAPIView, DestroyAPIView, UpdateAPIView)
+from .serializers import *
 from .models import *
 from .forms import *
 
-
-# Create your views here.
 
 def index(request):
     tasks = Task.objects.all()
@@ -47,3 +46,28 @@ def deleteTask(request, pk):
 
     context = {'item': item}
     return render(request, 'tasks/delete.html', context)
+
+
+class TaskCreateView(CreateAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+
+class TaskRetrieveView(RetrieveAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+
+class TaskListView(ListAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+
+class TaskDestroyView(DestroyAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+
+class TaskUpdateView(UpdateAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
